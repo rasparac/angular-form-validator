@@ -1,5 +1,5 @@
 {
-  "name": "angular-form-validator",
+  "name": "angularjs-form-validator",
   "homepage": "https://github.com/rasparac/angular-form-validator",
   "description": "Simple form validation directive",
   "main": "./dist/angular-form-validator.js",
