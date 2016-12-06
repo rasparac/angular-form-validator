@@ -4,10 +4,10 @@ AngularJS form validation directive
 # Install
 * Using bower and running `bower install angularjs-form-validator`
 
-#TOD0
-- [] update documentation
-- [] live demo page
-- [] add more validatio rules
+#TODO
+- [ ] update documentation
+- [ ] live demo page
+- [ ] add more validatio rules
 
 #How to add to the project
 ````html
