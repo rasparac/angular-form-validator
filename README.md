@@ -7,7 +7,8 @@ AngularJS form validation directive
 #TODO
 - [ ] update documentation
 - [ ] live demo page
-- [ ] add more validatio rules
+- [ ] add more validation rules
+- [ ] minify
 
 #How to add to the project
 ````html
