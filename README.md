@@ -16,8 +16,6 @@ AngularJS form validation directive
 #Code example
 Each input field must have [name] attribute
 
-#HTML
-
 ##Simple form without options
 
 ````html
@@ -79,7 +77,7 @@ Custom validation function must return object:
     }
 ````
 
-## Javascript code
+###Javascript code
 ````javascript
 
     'use strict';
@@ -112,7 +110,7 @@ Custom validation function must return object:
     }
 ````
 
-##HTML
+###HTML
 
 ````html
     <form ng-submit="demo.customValidationFromSubmit()" novalidate name="customValidationFrom">
@@ -176,7 +174,7 @@ Custom validation function must return object:
 ##Async validation and parent element
 Async validation function must return promise.
 
-## Javascript code
+### Javascript code
 ````javascript
 
     'use strict';
@@ -203,6 +201,8 @@ Async validation function must return promise.
         }
     }
 ````
+
+###HTML
 ````html
 	<form ng-submit="demo.asyncFormValidationSubmit()" novalidate name="asyncForm">
         <div class="test-parent">
