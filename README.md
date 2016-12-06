@@ -174,6 +174,7 @@ Custom validation function must return object:
 ````
 
 ##Async validation and parent element
+Async validation function must return promise.
 
 ## Javascript code
 ````javascript
