@@ -1,0 +1,27 @@
+{
+  "name": "angular-form-validator",
+  "homepage": "https://github.com/rasparac/angular-form-validator",
+  "description": "Simple form validation directive",
+  "main": "./dist/angular-form-validator.js",
+  "keywords": [
+    "form",
+    "validation",
+    "angular",
+    "angular validation",
+    "form",
+    "validation",
+    "client side validation",
+    "angular client validation"
+  ],
+  "authors": [
+    "Igor Borovica"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
