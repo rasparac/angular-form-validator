@@ -6,7 +6,7 @@ AngularJS form validation directive
 
 #How to add to the project
 ````html
-	<script type="text/javascript" src="../bower_components/ib-submit/ib-submit.js"></script>
+	<script type="text/javascript" src="../bower_components/dist/angular-form-validator.js"></script>
 ````
 
 ````javascript
