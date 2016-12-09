@@ -8,6 +8,8 @@ AngularJS form validation directive
 - [ ] update documentation
 - [ ] live demo page
 - [ ] add more validation rules
+- [ ] tests
+- [ ] add on blur validation
 - [ ] minify
 
 #How to add to the project
@@ -19,51 +21,27 @@ AngularJS form validation directive
 	angular.module('app', ['formValidator']);
 ````
 
-#Code example
-Each input field must have [name] attribute
+#Code examples
+Each input field must have [name] attribute. To use angularjs form validator just include formValidator into your project.
+Attach a [validation] attribute to input.
 
 ##Simple form without options
+In this example validator is going to check if the input field is filled.
 
 ````html
 	<form ng-submit="demo.noOptionsFormSubmit()" novalidate name="noOptionsForm">
-        <div class="test-parent">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input
-                    name="username"
-                    validation
-                    required
-                    ng-model="demo.noOptionsFormData.username"
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    placeholder="Username">
-            </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input
+                name="username"
+                validation
+                required
+                ng-model="demo.noOptionsFormData.username"
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Username">
         </div>
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input
-                validation
-                required
-                name="email"
-                ng-model="demo.noOptionsFormData.email"
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Email">
-            </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-                validation
-                required
-                name="password"
-                ng-model="demo.noOptionsFormData.password"
-                type="password"
-                class="form-control"
-                id="password"
-                placeholder="Password">
-            </div>
         <div class="form-group">
             <button
                 ng-disabled="noOptionsForm.$invalid"
@@ -74,19 +52,71 @@ Each input field must have [name] attribute
     </form>
 ````
 
-##Custom validation and options
-Custom validation function must return object: 
+##Validation options
+You can set validation options via [validation-options] attribute. You just need to pass a JSON object with the options.
+
 ````javascript
     {
-        isValid: true or false
-        message: ''
+        above: true,
+        customMessages: {
+            pattern: 'You must enter \'username\'',
+            required: 'Custom required message!',
+            minlength: 'Custom to short message!',
+            maxlength: 'Custom to long message'
+        },
+        parentElement: 'custom-parent-element',
+        parentValidationClass: 'parent-element-custom-class'
+        elementErrorClass: 'error-element-custom-class',
+        errorElement: 'custom-error-element'
     }
 ````
 
-###Javascript code
-````javascript
+###HTML
 
-    'use strict';
+````html
+    <form ng-submit="demo.customOptionsFromSubmit()" novalidate name="customOptionsFrom">
+        <div class="custom-parent-element">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    name="username"
+                    validation
+                    validation-options="{ 'parentElement: 'custom-parent-element', 'above': true, customMessages: { pattern: 'You must enter \'username\'', required: 'Custom required message!' }}"
+                    required
+                    ng-minlength="5"
+                    ng-maxlength="10"
+                    ng-pattern="/username/"
+                    ng-model="demo.customOptionsFromData.username"
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    placeholder="Username">
+            </div>
+        </div>
+        <div class="form-group">
+            <button
+                ng-disabled="customOptionsFrom.$invalid"
+                class="btn btn-default btn-md btn-block">
+                Submit
+            </button>
+        </div>
+    </form>
+````
+
+##Custom validation function
+You can also pass a custom validation to the validator.
+In the example below you can see how to add a custom validation to the validator.
+Custom validation function must return an object with two params, isValid and message;
+Example:
+
+````javascript
+    {
+        isValid: true,
+        message: 'Custom message!'
+    }
+````
+### Javascript code
+````javascript
 
     angular
         .module('demo', ['formValidator'])
@@ -114,119 +144,55 @@ Custom validation function must return object:
             return customValidationObj;
         }
     }
+
 ````
 
-###HTML
-
-````html
-    <form ng-submit="demo.customValidationFromSubmit()" novalidate name="customValidationFrom">
-        <div class="test-parent">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input
-                    name="username"
-                    validation
-                    validation-options="{ 'over': true, customMessages: { pattern: 'You must enter \'username\'', required: 'Custom required message!' }}"
-                    required
-                    ng-pattern="/username/"
-                    ng-model="demo.customValidationFromData.username"
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    placeholder="Username">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-                validation
-                required
-                ng-minlength="5"
-                ng-maxlength="10"
-                name="password"
-                validation-options="{ 'over': true }"
-                ng-model="demo.customValidationFromData.password"
-                type="password"
-                class="form-control"
-                id="password"
-                placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label for="password">Confirm Password</label>
-            <input
-                validation
-                required
-                name="confirmPassword"
-                ng-minlength="5"
-                ng-maxlength="10"
-                validation-options="{ 'over': true, 'customMessages': { 'maxlength': 'Custom maxlength message!'} }"
-                custom-validation="demo.customValidation(demo.customValidationFromData.confirmPassword)"
-                ng-model="demo.customValidationFromData.confirmPassword"
-                type="password"
-                class="form-control"
-                id="password"
-                placeholder="Confirm Password">
-        </div>
-        <div class="form-group">
-            <button
-                ng-disabled="customValidationFrom.$invalid"
-                class="btn btn-default btn-md btn-block">
-                Submit
-            </button>
-        </div>
-    </form>
-````
-
-##Async validation and parent element
-Async validation function must return promise.
+##Async validation function
+You can pass a async validation function to the validator.
+Async function must return a promise. Documentation (https://docs.angularjs.org/guide/forms).
+If you use async validation you should also use [async-message] attribute in which you can save the message.
 
 ### Javascript code
+
 ````javascript
 
-    'use strict';
+    vm.asyncValidation = function() {
+        return function(modelView, viewValue) {
+            return users
+                    .checkUsername(viewValue)
+                    .then(success, error)
+        }
 
-    angular
-        .module('demo', ['formValidator'])
+        function success(response) {
+            return true;
+        }
 
-    angular
-        .module('demo')
-        .controller('DemoCtrl', DemoCtrl);
-
-    function DemoCtrl(users, $q) {
-        var vm = this;
-
-        vm.asyncValidation = function() {
-            return function(modelView, viewValue) {
-                return users.checkUsername(viewValue).then(function(resp) {
-                        return true;
-                }, function(error) {
-                    vm.asyncMessage = error;
-                    return $q.reject();
-                })
-            }
+        function error(error) {
+            vm.asyncMessage = error;
+            return $q.reject();
         }
     }
+
 ````
 
 ###HTML
+
 ````html
-	<form ng-submit="demo.asyncFormValidationSubmit()" novalidate name="asyncForm">
-        <div class="test-parent">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input
-                    name="username"
-                    validation
-                    validation-options="{ parentElement: 'test-parent' }"
-                    async-validation="demo.asyncValidation()"
-                    async-message="demo.asyncMessage"
-                    required
-                    ng-model="demo.asyncFormFormData.username"
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    placeholder="Username">
-            </div>
+
+    <form ng-submit="demo.asyncFormValidationSubmit()" novalidate name="asyncForm">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input
+                name="username"
+                validation
+                async-validation="demo.asyncValidation()"
+                async-message="demo.asyncMessage"
+                required
+                ng-model="demo.asyncFormFormData.username"
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Username">
         </div>
         <div class="form-group">
             <button
@@ -236,4 +202,5 @@ Async validation function must return promise.
             </button>
         </div>
     </form>
+
 ````

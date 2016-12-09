@@ -92,7 +92,7 @@
                         deferred.reject("User name already taken!");
                     }
                 })
-                deferred.resolve(users);
+                deferred.resolve();
             }, 0)
             return deferred.promise; 
         }

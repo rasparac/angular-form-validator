@@ -24,7 +24,7 @@
             var elementCtrl = formCtrl[attributeName];
             var parentElement = elem.parent();
             var options = angular.extend({ 
-                over: false,
+                above: false,
                 parentValidationClass: 'has-error',
                 parentElement: false,
                 errorElement: 'div',
@@ -47,7 +47,7 @@
                 checkAsyncValidation();
 
                 if (elementCtrl.$dirty && elementCtrl.$valid === false) {
-                    if (options.over) {
+                    if (options.above) {
                         angular.element(parentElement).prepend(getError());
                     } else {
                         angular.element(parentElement).append(getError());
