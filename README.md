@@ -1,11 +1,11 @@
 # angular-form-validator
 AngularJS form validation directive
+Inspired by https://github.com/turinggroup/angular-validator.
 
 # Install
 * Using bower and running `bower install angularjs-form-validator`
 
 #TODO
-- [ ] update documentation
 - [ ] live demo page
 - [ ] add more validation rules
 - [ ] tests
