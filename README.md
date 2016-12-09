@@ -2,11 +2,11 @@
 AngularJS form validation directive
 Inspired by https://github.com/turinggroup/angular-validator.
 
+Live example: https://rasparac.github.io/angular-form-validator/
 # Install
 * Using bower and running `bower install angularjs-form-validator`
 
 #TODO
-- [ ] live demo page
 - [ ] add more validation rules
 - [ ] tests
 - [ ] add on blur validation
@@ -66,7 +66,7 @@ You can set validation options via [validation-options] attribute. You just need
         },
         parentElement: 'custom-parent-element',
         parentValidationClass: 'parent-element-custom-class'
-        elementErrorClass: 'error-element-custom-class',
+        errorElementClass: 'error-element-custom-class',
         errorElement: 'custom-error-element'
     }
 ````

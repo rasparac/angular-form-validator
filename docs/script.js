@@ -93,7 +93,7 @@
                     }
                 })
                 deferred.resolve();
-            }, 0)
+            }, 500)
             return deferred.promise; 
         }
     }
