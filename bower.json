@@ -22,6 +22,15 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
-  ]
+    "tests",
+    "karma.conf.js",
+    "bower.json",
+    "README.md"
+  ],
+  "devDependencies": {
+    "angular-mocks": "^1.6.0"
+  },
+  "dependencies": {
+    "angular": "^1.6.0"
+  }
 }
