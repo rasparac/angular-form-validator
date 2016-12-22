@@ -11,6 +11,18 @@ var Utils = function() {
         });
     }
 
+    this.getElementBySelector = function(form, selector) {
+        return form[0].querySelector(selector);
+    }
+
+    this.getElementsBySelector = function(form, selector) {
+        return form[0].querySelectorAll(selector);
+    }
+
+    this.getElementText = function(form, selector) {
+        return this.getElementBySelector(form, selector).innerHTML;
+    }
+
     this.form = function(form) {
         var formObject = form;
 
