@@ -40,6 +40,10 @@
             function handleValidations(newVal, oldVal) {
                 if (options.parentElement) {
                     parentElement = angular.element(findParentElement(element, options.parentElement));
+
+                    if (parentElement.length == 0) {
+                        throw Error("There is no parent element for " + attributeName + " input with the " + options.parentElement + " class.");
+                    }
                 }
 
                 checkIsThereValidationMessage(parentElement);
@@ -133,14 +137,20 @@
         self.required = 'This field is required!';
         self.minlength = 'This field must have at least $value characters!';
         self.maxlength = 'This field cannot be longer $value than characters!';
-        self.pattern = 'Wrong patter! Please enter $value';
+        self.pattern = 'Wrong pattern! Please enter $value.';
+        self.max = 'Please enter a value less than or equal to $value.';
+        self.min = 'Please enter a value greater than or equal to $value.';
+
+        self.replaceVariable = '$value';
 
         self.defaultMessages = {
             required: required,
             minlength: minlength,
             maxlength: maxlength,
             pattern: pattern,
-            email: email
+            email: email,
+            max: max,
+            min:min
         }
 
         self.setDefaultMessages = function(messages) {
@@ -165,15 +175,23 @@
         }
 
         function minlength(length) {
-            return self.minlength.replace('$value', length);
+            return self.minlength.replace(self.replaceVariable, length);
         }
 
         function maxlength(length) {
-            return self.maxlength.replace('$value', length);
+            return self.maxlength.replace(self.replaceVariable, length);
         }
 
         function pattern(regex) {
-            return self.pattern.replace('$value', regex);
+            return self.pattern.replace(self.replaceVariable, regex);
+        }
+
+        function max(max) {
+            return self.max.replace(self.replaceVariable, max);
+        }
+
+        function min(min) {
+            return self.min.replace(self.replaceVariable, min);
         }
 
         self.$get = function() {

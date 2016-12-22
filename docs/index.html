@@ -60,6 +60,20 @@
                             placeholder="Email">
                     </div>
                     <div class="form-group">
+                        <label for="age">Age</label>
+                        <input
+                            validation
+                            required
+                            name="age"
+                            max="99"
+                            min="18"
+                            ng-model="demo.noOptionsFormData.age"
+                            type="number"
+                            class="form-control"
+                            id="age"
+                            placeholder="Age">
+                    </div>
+                    <div class="form-group">
                         <label for="password">Password</label>
                         <input
                             validation

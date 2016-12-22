@@ -4,11 +4,8 @@ var concat = require('gulp-concat');
 
 var src = './src/angular-form-validator.js';
 
-gulp.task('default', ['watch']);
+gulp.task('default');
 
-gulp.task('watch', function() {
-    gulp.watch(src);
-});
 
 gulp.task('js-build', function() {
     return gulp.src(src)
