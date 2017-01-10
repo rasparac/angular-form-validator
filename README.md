@@ -62,7 +62,9 @@ You can set validation options via [validation-options] attribute. You just need
             pattern: 'You must enter \'username\'',
             required: 'Custom required message!',
             minlength: 'Custom to short message!',
-            maxlength: 'Custom to long message'
+            maxlength: 'Custom to long message',
+            max: 'Custom max message',
+            min: 'Custom min message'
         },
         parentElement: 'custom-parent-element',
         parentValidationClass: 'parent-element-custom-class'
