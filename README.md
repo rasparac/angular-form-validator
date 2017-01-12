@@ -10,7 +10,7 @@ Live example: https://rasparac.github.io/angular-form-validator/
 - [ ] add more validation rules
 - [ ] tests
 - [ ] add on blur validation
-- [ ] minify
+- [x] minify
 
 #How to add to the project
 ````html
