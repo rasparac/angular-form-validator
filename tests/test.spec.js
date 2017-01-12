@@ -113,7 +113,7 @@ describe('validator', function () {
                 '   </div>',
                 '   <div class="parent-element"><input validation-options="validationOptions.customEmailMessage" type="email" validation name="email" ng-model="data.email"></div>',
                 '   <div class="parent-element"><input  validation-options="validationOptions.customErrorElement" ng-pattern="/testPattern/" validation name="pattern" ng-model="data.pattern"></div>',
-                '   <div class="parent-element"><input type="number" max="18" min="5" validation name="age" ng-model="data.age"></div>',
+                '   <div class="parent-element"><input type="number" validation-options="validationOptions.errorMessageAbove" max="18" min="5" validation name="age" ng-model="data.age"></div>',
                 '   <button ng-disabled="testForm.$invalid">Submit</button>',
                 '</from>'
             ].join('\n');
@@ -123,13 +123,13 @@ describe('validator', function () {
                     parentElement: 'test-custom-parent',
                     parentValidationClass: 'parent-element-custom-class',
                     customMessages: {
-                        required: 'Custom required message'
+                        required: 'Custom required message.'
                     }
                 },
                 customLengthMessages : {
                     customMessages: {
                         minlength: "Custom minlength message.",
-                        maxlength: "Custom maxlength messasge."
+                        maxlength: "Custom maxlength message."
                     }
                 },
                 customEmailMessage: {
@@ -140,6 +140,9 @@ describe('validator', function () {
                 customErrorElement: {
                     errorElementClass: "error-element-custom-class",
                     errorElement: "p"
+                },
+                errorMessageAbove: {
+                    above: true
                 }
             }
             form = angular.element(fromTemplate);
@@ -157,8 +160,63 @@ describe('validator', function () {
             formObject.fillForm(fillData);
             formObject.fillOutInputs(['fullname']);
             var customParent = utils.getElementBySelector(form, '.test-custom-parent');
+            var errorDiv = utils.getElementBySelector(form, '.with-errors');
             expect(customParent.className).toEqual('test-custom-parent parent-element-custom-class');
-            console.info(customParent.childNodes);
+            expect(errorDiv.innerHTML).toEqual('Custom required message.');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+        });
+
+        it('should test custom length messages', function() {
+            var fillData = {
+                'username': 'testing maxlength message',
+            }
+            var formObject = utils.form($scope.testForm);
+            formObject.fillForm(fillData);
+            var errorMaxLengthDiv = utils.getElementBySelector(form, '.with-errors');
+            expect(errorMaxLengthDiv.innerHTML).toEqual('Custom maxlength message.');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+
+            formObject.fillOutInputs(['username']);
+            fillData.username = "min";
+            formObject.fillForm(fillData);
+            var errorMinLengthDiv = utils.getElementBySelector(form, '.with-errors');
+            expect(errorMinLengthDiv.innerHTML).toEqual('Custom minlength message.');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+        });
+
+        it('should test custom email message', function() {
+            var fillData = {
+                'email': "test email"
+            }
+            var formObject = utils.form($scope.testForm);
+            formObject.fillForm(fillData);
+            var errorEmailDiv = utils.getElementBySelector(form, '.with-errors');
+            expect(errorEmailDiv.innerHTML).toEqual('Custom email message.');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+        });
+
+        it('should test custom error element and class', function() {
+            var fillData = {
+                'pattern': "test"
+            }
+            var formObject = utils.form($scope.testForm);
+            formObject.fillForm(fillData);
+            var errorParagraph = utils.getElementBySelector(form, 'p');
+            expect(angular.element(errorParagraph).length).toBe(1);
+            expect(errorParagraph.className).toEqual('error-element-custom-class');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+        });
+
+        it('should test error message position (above input element)', function() {
+            var fillData = {
+                age: 4
+            }
+            var formObject = utils.form($scope.testForm);
+            formObject.fillForm(fillData);
+            var divErrorElement = utils.getElementBySelector(form, '.has-error');
+            expect(divErrorElement.children[0].innerHTML).toEqual('Please enter a value greater than or equal to 5.');
+            expect(divErrorElement.children[1].tagName).toEqual('INPUT');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
         });
 
     });
