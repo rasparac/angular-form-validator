@@ -155,9 +155,12 @@
 
         self.setDefaultMessages = function(messages) {
             if (!isObject(messages)) {
-                console.error("Please provide key:value object. Example: { 'required': 'required text' }");
+                throw new Error("Please provide key:value object. Example: { 'required': 'required text' }");
             }
             for (var message in messages) {
+                if (!Object.hasOwnProperty.call(self.defaultMessages, message)) {
+                    throw new Error(message + ' validation type not supported.');
+                }
                 self[message] = messages[message];
             }
         }

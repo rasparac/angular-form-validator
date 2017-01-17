@@ -221,4 +221,94 @@ describe('validator', function () {
 
     });
 
+    describe('provider options test', function() {
+        var validationProvider;
+        var form;
+        var $scope;
+        var inputFileds;
+
+        beforeEach(function() {
+            inject(function($injector) {
+                validationProvider = $injector.get('validation');
+            });
+            
+
+            var fromTemplate = [
+                '<form name="testForm">',
+                '   <div class="parent-element"><input type="text" required validation name="fullname" ng-model="data.fullname"></div>',
+                '   <div class="parent-element"><input ng-minlength="5" ng-maxlength="15" validation name="username" ng-model="data.username"></div>',
+                '   <div class="parent-element"><input type="email" validation name="email" ng-model="data.email"></div>',
+                '   <div class="parent-element"><input ng-pattern="/testPattern/" validation name="pattern" ng-model="data.pattern"></div>',
+                '   <div class="parent-element"><input type="number" max="18" min="5" validation name="age" ng-model="data.age"></div>',
+                '   <button ng-disabled="testForm.$invalid">Submit</button>',
+                '</from>'
+            ].join('\n');
+            $scope = $rootScope.$new();
+            form = angular.element(fromTemplate);
+            form = $compile(form)($scope);
+            inputFileds = ['fullname', 'username', 'email', 'pattern', 'age'];
+            $scope.data = {};
+            $scope.$apply();
+        });
+
+        it('should inject validationProvider', function() {
+            expect(validationProvider).not.toBe(null);
+        });
+
+        it('should throw exception for invalid messages setup', function() {
+            var messages = [
+                { required: "test test" }
+            ];
+            var messagesObject = {
+                date: 'Date test'
+            }
+            expect(function() { validationProvider.setDefaultMessages(messages) })
+                .toThrow(new Error("Please provide key:value object. Example: { 'required': 'required text' }"));
+            expect(function() { validationProvider.setDefaultMessages(messagesObject) })
+                .toThrow(new Error("date validation type not supported."));
+        });
+
+        it('should test validation provider error messages', function() {
+            var defaultMessages = {
+                required: "Default required message",
+                minlength: "Default minlength message",
+                maxlength: "Default maxlength message",
+                pattern: "Default pattern message",
+                email: "Default email message",
+                max: "Default max message",
+                min: "Default min message"
+            }
+
+            validationProvider.setDefaultMessages(defaultMessages);
+
+            var fillData = {
+                'fullname': 'igor borovica',
+                'username': 'test',
+                'email': 'test',
+                'pattern': 'test',
+                'age': 4
+            }
+
+            var formObject = utils.form($scope.testForm);
+            formObject.fillForm(fillData);
+            formObject.fillOutInputs(['fullname']);
+            var errorDivs = utils.getElementsBySelector(form, '.with-errors');
+            expect(errorDivs.length).toBe(5);
+            expect(errorDivs[0].innerHTML).toEqual('Default required message');
+            expect(errorDivs[1].innerHTML).toEqual('Default minlength message');
+            expect(errorDivs[2].innerHTML).toEqual('Default email message');
+            expect(errorDivs[3].innerHTML).toEqual('Default pattern message');
+            expect(errorDivs[4].innerHTML).toEqual('Default min message');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+            formObject.fillOutInputs(inputFileds);
+            fillData.age = 99;
+            fillData.username = 'test test test test';
+            formObject.fillForm(fillData);
+            errorDivs = utils.getElementsBySelector(form, '.with-errors');
+            expect(errorDivs[0].innerHTML).toEqual('Default maxlength message');
+            expect(errorDivs[3].innerHTML).toEqual('Default max message');
+            expect(utils.getElementBySelector(form, 'button').disabled).toBe(true);
+        });
+    })
+
 });
