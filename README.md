@@ -1,14 +1,11 @@
-# angular-form-validator
-AngularJS form validation directive
-Inspired by https://github.com/turinggroup/angular-validator.
+DEMO: https://rasparac.github.io/angular-form-validator/
 
-Live example: https://rasparac.github.io/angular-form-validator/
 # Install
 * Using bower and running `bower install angularjs-form-validator`
 
 #TODO
-- [ ] add more validation rules
-- [ ] tests
+- [x] add more validation rules
+- [x] tests
 - [ ] add on blur validation
 - [x] minify
 
@@ -152,7 +149,7 @@ Example:
 ##Async validation function
 You can pass a async validation function to the validator.
 Async function must return a promise. Documentation (https://docs.angularjs.org/guide/forms).
-If you use async validation you should also use [async-message] attribute in which you can save the message.
+If you use async validation you should also use [async-message] attribute.
 
 ### Javascript code
 
@@ -206,3 +203,7 @@ If you use async validation you should also use [async-message] attribute in whi
     </form>
 
 ````
+
+# angular-form-validator
+AngularJS form validation directive
+Inspired by https://github.com/turinggroup/angular-validator.
