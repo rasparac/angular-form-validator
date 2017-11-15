@@ -3,13 +3,13 @@ DEMO: https://rasparac.github.io/angular-form-validator/
 # Install
 * Using bower and running `bower install angularjs-form-validator`
 
-#TODO
+# TODO
 - [x] add more validation rules
 - [x] tests
 - [ ] add on blur validation
 - [x] minify
 
-#How to add to the project
+# How to add to the project
 ````html
 	<script type="text/javascript" src="../bower_components/dist/angular-form-validator.js"></script>
 ````
@@ -18,11 +18,11 @@ DEMO: https://rasparac.github.io/angular-form-validator/
 	angular.module('app', ['formValidator']);
 ````
 
-#Code examples
+# Code examples
 Each input field must have [name] attribute. To use angularjs form validator just include formValidator into your project.
 Attach a [validation] attribute to input.
 
-##Simple form without options
+## Simple form without options
 In this example validator is going to check if the input field is filled.
 
 ````html
@@ -49,7 +49,7 @@ In this example validator is going to check if the input field is filled.
     </form>
 ````
 
-##Validation options
+## Validation options
 You can set validation options via [validation-options] attribute. You just need to pass a JSON object with the options.
 
 ````javascript
@@ -70,7 +70,7 @@ You can set validation options via [validation-options] attribute. You just need
     }
 ````
 
-###HTML
+### HTML
 
 ````html
     <form ng-submit="demo.customOptionsFromSubmit()" novalidate name="customOptionsFrom">
@@ -102,7 +102,7 @@ You can set validation options via [validation-options] attribute. You just need
     </form>
 ````
 
-##Custom validation function
+## Custom validation function
 You can also pass a custom validation to the validator.
 In the example below you can see how to add a custom validation to the validator.
 Custom validation function must return an object with two params, isValid and message;
@@ -174,7 +174,7 @@ If you use async validation you should also use [async-message] attribute.
 
 ````
 
-###HTML
+### HTML
 
 ````html
 
